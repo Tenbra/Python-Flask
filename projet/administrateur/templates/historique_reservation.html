@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-sm-4 text-center">HISTORIQUE DES RESERVATIONS</h1>
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                      <th scope="col">ID/N-Serie</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Demandeur</th>
+                      <th scope="col">Matiere</th>
+                      <th scope="col">Filiere</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">h_debut</th>
+                      <th scope="col">h_fin</th>
+                      <th scope="col">statut</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for h in hist %}
+                  <tr>
+                      <th scope="row">{{h.reserv_id}}</th>
+                      <td>{{h.type}}</td>
+                      <td>{{h.user}}</td>
+                      <td>{{h.matiere}}</td>
+                      <td>{{h.filiere}}</td>
+                      <td>{{h.jour}}</td>
+                      <td>{{h.h_debut}}</td>
+                      <td>{{h.h_fin}}</td>
+                      <td>{{h.statut}}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+{% endblock %}

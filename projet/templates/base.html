@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap 4.1</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_gestion.css') }}">
+  </head>
+  <body>
+
+    <div class="container">
+        <main>
+
+            <header class="fixed-top">
+                <div class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <div class="menu">
+                        <a href="#" class="navbar-brand">Institut Universitaire de la Cote</a>
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarDropdown">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('administrateur.accueil') }}">ACCUEIL</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('administrateur.liste', del_id=' ') }}">MATERIAUX ET SALLES</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('administrateur.demande', demand_id=' ') }}">DEMANDE</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('administrateur.utilisateur', del_mat=' ') }}">UTILISATEURS</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('administrateur.compte') }}">COMPTE</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+    {% block content %}
+
+    {% endblock %}
+        </main>
+    </div>
+  <!-- jQuery first, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  </body>
+</html>

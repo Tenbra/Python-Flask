@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CONNEXION</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_connexion.css') }}">
+
+</head>
+<body>
+
+
+        {% for mess in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        {{mess}}
+        </div>
+        {% endfor %}
+
+
+        <div class="connexion">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4">
+                        <h1 class="mb-3 text-center">Connexion</h1>
+
+                        <form class="mb-3" method="POST" action="{{url_for('connexion')}}">
+                            <div class="form-group">
+                            {{ form.hidden_tag() }}
+                            {{ form.email.label }} {{ form.email( class_="form-control" ) }}
+                            </div>
+                            <div class="form-group">
+                            {{ form.password.label }} {{ form.password( class_="form-control" ) }}
+                            </div>
+                            {{ form.submit( class_="btn btn-primary btn-block" ) }} <br><br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- jQuery first, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

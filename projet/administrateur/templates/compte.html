@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="col-12 col-sm-8 col-md-6 col-lg-8 offset-sm-2 offset-md-3 offset-lg-2">
+
+        {% for mess in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        {{mess}}
+        </div>
+        {% endfor %}
+
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-3">
+                                <h1 class="mb-sm-4 text-center">COMPTE</h1>
+                                      <div class="row">
+                                        <div class="col-12 col-sm-10">
+                                            <div class="form-group">
+                                                <label>Nom : </label> {{admin.username}}
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-12 col-sm-10">
+                                            <div class="form-group">
+                                              <label>Email : </label> {{ admin.email }}
+                                            </div>
+                                          </div>
+                                      </div>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <div class="row"><a href="#" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalScrollableBody">Creer un administrateur</a></div><br>
+                                    <div class="row"><a href="{{ url_for('administrateur.historique_reservation') }}" class="btn btn-secondary btn-sm btn-block">Historique des reservations</a></div><br>
+                                    <div class="row"><a href="{{ url_for('administrateur.historique_materiaux_salle') }}" class="btn btn-secondary btn-sm btn-block">Historique des Materiaux et Salles</a></div><br>
+                                    <div class="row"><a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm btn-block">Deconnexion</a></div><br>
+                                </div>
+                            </div>
+
+
+                                      <div class="modal fade" id="modalScrollableBody" tabindex="-1" role="dialog" aria-labelledby="modalScrollableBodyTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                              <form method="POST">
+                                                  <div class="modal-header">
+                                                      <h5 class="modal-title" id="modalScrollableBodyTitle">Nouvel administrateur</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      {{ form.hidden_tag() }}
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form.nom.label }} {{ form.nom(class="form-control") }}
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form.email.label }} {{ form.email(class="form-control") }}
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                              <div class="form-group">
+                                                                  {{ form.password.label }} {{ form.password(class="form-control") }}
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      {{ form.submit(class="btn btn-primary") }}
+                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+
+
+{% endblock %}

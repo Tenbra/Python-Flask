@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-sm-4 text-center">HISTORIQUE DES MATERIAUX ET SALLES</h1>
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                      <th scope="col">ID/N-Serie</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Model/Numero de Salle</th>
+                      <th scope="col">Exigence/Nombre de places</th>
+                      <th scope="col">Statut</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for h in hist %}
+                  <tr>
+                      <th scope="row">{{h.uniq_id}}</th>
+                      <td>{{h.type}}</td>
+                      <td>{{h.info1}}</td>
+                      <td>{{h.info2}}</td>
+                      <td>{{h.statut}}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+{% endblock %}

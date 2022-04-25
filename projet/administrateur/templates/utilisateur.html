@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1 class="mb-sm-4 text-center">GESTION DES UTILISATEURS</h1>
+
+    {% for mess in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        {{mess}}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="btn-group" role="group" aria-label="Standard button group">
+                 <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalScrollableBody">Creer un utilisateur</a>
+
+                                      <div class="modal fade" id="modalScrollableBody" tabindex="-1" role="dialog" aria-labelledby="modalScrollableBodyTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                              <form method="POST">
+                                                  <div class="modal-header">
+                                                      <h5 class="modal-title" id="modalScrollableBodyTitle">Nouvel administrateur</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      {{ form1.hidden_tag() }}
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form1.username.label }} {{ form1.username(class="form-control") }}
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form1.email.label }} {{ form1.email(class="form-control") }}
+                                                            </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6">
+                                                              <div class="form-group">
+                                                                  {{ form1.matricule.label }} {{ form1.matricule(class="form-control") }}
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                              <div class="form-group">
+                                                                  {{ form1.poste.label }} {{ form1.poste(class="form-control") }}
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      {{ form1.submit(class="btn btn-primary") }}
+                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                        </div>
+                                      </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="float-right">
+                <nav class="navbar">
+                    <form method="POST" class="form-inline">
+                    {{ form.hidden_tag() }}
+                    {{ form.cri(class="form-control", placeholder='nom, email, poste...') }}{{ form.submit(class="btn btn-primary") }}
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Matricule</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Poste</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Suprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{user.matricule}}</th>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.poste}}</td>
+            <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalScrollableBody1">Modifier</a></td>
+                                    <div class="modal fade" id="modalScrollableBody1" tabindex="-1" role="dialog" aria-labelledby="modalScrollableBodyTitle1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                          <div class="modal-content">
+                                              <form method="POST">
+                                                  <div class="modal-header">
+                                                      <h5 class="modal-title" id="modalScrollableBodyTitle1">Modifier</h5>
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      {{ form1.hidden_tag() }}
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form1.username.label }} {{ form1.username(class="form-control", value=user.username) }}
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                            <div class="form-group">
+                                                                {{ form1.email.label }} {{ form1.email(class="form-control", value=user.email) }}
+                                                            </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6">
+                                                              <div class="form-group">
+                                                                  {{ form1.matricule.label }} {{ form1.matricule(class="form-control", value=user.matricule) }}
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12 col-sm-6">
+                                                              <div class="form-group">
+                                                                  {{ form1.poste.label }} {{ form1.poste(class="form-control") }}
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      {{ form1.submit(class="btn btn-primary") }}
+                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                        </div>
+                                    </div>
+            <td><a class="btn btn-danger" href="{{ url_for('administrateur.utilisateur', del_mat=user.matricule) }}">Supprimer</a></td>
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

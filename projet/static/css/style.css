@@ -1,0 +1,55 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%; 
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background: url(background1.PNG);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: table;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+}
+
+.connexion {
+    font-size: 20px;
+    font-weight: 200;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.connexion h1{
+    font-size: 40px;
+    font-weight: 600;
+    text-decoration-color: white;
+}
+
+.connexion label{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.connexion .row div {
+    opacity: 1;
+    color: white;
+}
+
+.connexion .row input {
+    opacity: 0.8;
+}
+.connexion button{
+    color: #fff;
+    background: #009f8ac5;
+    border: none;
+}

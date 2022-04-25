@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% for mess in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        {{mess}}
+        </div>
+        {% endfor %}
+
+        <h1 class="mb-sm-4 text-center">ACCUEIL</h1>
+
+        {% if materiels.first() == None and salles.first() == None %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        Aucune reservation en cours pour le moment
+        </div>
+
+        {% else %}
+        <div class="row">
+
+            {% for mat in materiels %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card">
+                  {% if mat.materiel.type == 'VIDEOPROJECTEUR' %}
+                  <img src="{{ url_for('static', filename='image/projecteur.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% endif %}
+                <div class="card-body">
+                  <h4 class="card-title">{{mat.materiel.type}}</h4>
+                  <h6 class="card-subtitle">{{mat.materiel.sn}}</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{mat.user.username}} {{mat.user.matiere}}</li>
+                    <li class="list-group-item">Model : {{mat.materiel.model}}</li>
+                    <li class="list-group-item">Exigence : {{mat.materiel.exigence}}</li>
+                    <li class="list-group-item">Horaire : {{mat.h_debut}} à {{mat.h_fin}}</li>
+                </ul>
+                <div class="card-footer"><a class="btn btn-primary" href="{{url_for('administrateur.confirm_materiel', confirm_id=mat.id)}}">Confirmer le retour</a></div>
+              </div>
+            </div>
+            {% endfor %}
+
+            {% for sal in salles %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="card">
+                  {% if sal.salle.type == 'AMPHITHEATRE' %}
+                  <img src="{{ url_for('static', filename='image/amphi.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.salle.type == 'LABORATOIRE DE CHIMIE' %}
+                  <img src="{{ url_for('static', filename='image/chimie.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.salle.type == 'LABORATOIRE D\'ELECTRONIQUE' %}
+                  <img src="{{ url_for('static', filename='image/electronique.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.salle.type == 'LABORATOIRE D\'ELECTROTECHNIQUE' %}
+                  <img src="{{ url_for('static', filename='image/electrotech.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.salle.type == 'LABORATOIRE DE SCIENCES INFIRMIER' %}
+                  <img src="{{ url_for('static', filename='image/sciInfirm.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.salle.type == 'SALLE D\'INFORMATIQUE' %}
+                  <img src="{{ url_for('static', filename='image/info.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% endif %}
+                <div class="card-body">
+                  <h4 class="card-title">{{sal.salle.type}}</h4>
+                  <h6 class="card-subtitle">{{sal.salle.numero}}</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{sal.user.username}} {{sal.user.matiere}}</li>
+                    <li class="list-group-item">Nombre de place : {{sal.salle.nbre_place}}</li>
+                    <li class="list-group-item">Horaire : {{sal.h_debut}} à {{sal.h_fin}}</li>
+                </ul>
+                <div class="card-footer"><a class="btn btn-primary" href="{{url_for('administrateur.confirm_salle', confirm_id=sal.id)}}">Liberer</a></div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

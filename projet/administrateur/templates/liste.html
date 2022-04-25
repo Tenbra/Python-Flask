@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1 class="mb-sm-4 text-center">GESTION D'EQUIPEMENT</h1>
+
+    {% for mess in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        {{mess}}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <a class="btn btn-secondary"  href="{{ url_for('administrateur.add_salle', id=' ') }}" role="button">AJOUTER UNE SALLE </a>
+                <a class="btn btn-secondary"  href="{{ url_for('administrateur.add_materiel', sn=' ') }}" role="button">AJOUTER UN MATERIEL </a>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="float-right">
+                <nav class="navbar">
+                    <form method="POST" class="form-inline">
+                    {{ form.hidden_tag() }}
+                    {{ form.cri(class="form-control", placeholder='Type de materiel ou salle, model, numero de salle') }}{{ form.submit(class="btn btn-primary") }}
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            {% for mat in materiels %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <figure class="figure">
+                  {% if mat.type == 'VIDEOPROJECTEUR' %}
+                  <a href="#"><img src="{{ url_for('static', filename='image/projecteur.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                  {% else %}
+                  <a href="#"><img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                  {% endif %}
+                <figcaption class="figure-caption">
+                  <h5>{{mat.type}} <small>{{mat.model}}</small></h5>
+                    <p>Numero de serie : {{mat.sn}}</p>
+                    <p>moyens de connexion : {{mat.exigence}}</p>
+                    <a class="btn btn-primary" href="{{ url_for('administrateur.add_materiel', sn=mat.sn) }}">Modifier</a>
+                    <a class="btn btn-danger" href="{{ url_for('administrateur.liste', del_id=mat.sn) }}">Supprimer</a>
+                </figcaption>
+              </figure>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for sal in salles %}
+            <div class="col-12 col-md-6 col-lg-4">
+              <figure class="figure">
+                  {% if sal.type == 'AMPHITHEATRE' %}
+                  <a href="#"><img src="{{ url_for('static', filename='image/amphi.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                  {% elif sal.type == 'LABORATOIRE DE CHIMIE' %}
+                  <a href="#"><img src="{{ url_for('static', filename='image/chimie.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                  {% elif sal.type == 'LABORATOIRE D\'ELECTRONIQUE' %}
+                  <img src="{{ url_for('static', filename='image/electronique.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.type == 'LABORATOIRE D\'ELECTROTECHNIQUE' %}
+                  <img src="{{ url_for('static', filename='image/electrotech.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.type == 'LABORATOIRE DE SCIENCES INFIRMIER' %}
+                  <img src="{{ url_for('static', filename='image/sciInfirm.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% elif sal.type == 'SALLE D\'INFORMATIQUE' %}
+                  <img src="{{ url_for('static', filename='image/info.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                  {% else %}
+                  <a href="#"><img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                  {% endif %}
+                <figcaption class="figure-caption">
+                  <h5>{{sal.type}} <small>{{sal.numero}}</small></h5>
+                    <p> Nombre de place : {{sal.nbre_place}}</p>
+                    <a class="btn btn-primary" href="{{ url_for('administrateur.add_salle', id=sal.id) }}">Modifier</a>
+                    <a class="btn btn-danger" href="{{ url_for('administrateur.liste', del_id=sal.id) }}">Supprimer</a>
+                </figcaption>
+              </figure>
+            </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

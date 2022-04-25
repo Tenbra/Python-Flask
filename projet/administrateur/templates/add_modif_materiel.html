@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-8 offset-sm-2 offset-md-3 offset-lg-2">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+
+                    {% if materiel != None %}
+                    <h1 class="mb-sm-4 text-center">Modifier le materiel</h1>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 mb-3">
+                            <h4>Informations</h4>
+                            <form method="POST">
+                                {{ form.hidden_tag() }}
+                                {{ form.type_mat.label }}  {{ form.type_mat(class="form-control") }}<br>
+                                {{ form.model.label }}  {{ form.model(class="form-control", value=materiel.model) }}<br>
+                                {{ form.exigence.label }}<br>
+                                {% for sub in form.exigence %}
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    {{sub(class="custom-control custom-radio")}} {{sub.label}}
+                                </div>
+                                {% endfor %}
+                                <br>
+                                {{ form.submit(class="btn btn-primary") }}
+                                {{ form1.reset(class="btn btn-secondary") }}
+                            </form>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <figure class="figure">
+                                {% if materiel.type == 'VIDEOPROJECTEUR' %}
+                                <a href="#"><img src="{{ url_for('static', filename='image/projecteur.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                                {% else %}
+                                <a href="#"><img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                                {% endif %}
+                            </figure>
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <h1 class="mb-sm-4 text-center">Nouveau materiel</h1>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 mb-3">
+                            <h4>Informations</h4>
+                            <form method="POST">
+                                {{ form.hidden_tag() }}
+                                {{ form.sn.label }}  {{ form.sn(class="form-control") }}<br>
+                                {{ form.type_mat.label }}  {{ form.type_mat(class="form-control") }}<br>
+                                {{ form.model.label }}  {{ form.model(class="form-control") }}<br>
+                                {{ form.exigence.label }}<br>
+                                {% for sub in form.exigence %}
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    {{sub(class="custom-radio")}} {{sub.label}}
+                                </div>
+                                {% endfor %}
+                                {{ form.submit(class="btn btn-primary") }}
+                                {{ form1.reset(class="btn btn-secondary") }}
+                            </form>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <figure class="figure">
+                                <a href="#"><img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image"></a>
+                            </figure>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}

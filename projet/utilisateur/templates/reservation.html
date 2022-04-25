@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap 4.1</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style_gestion.css') }}">
+  </head>
+  <body>
+
+    <div class="container">
+        <main>
+
+            <header class="fixed-top" >
+                <div class="navbar navbar-expand-lg navbar-light bg-light">
+                  <div class="container">
+                    <a href="#" class="navbar-brand">Institut Universitaire de la Cote</a>
+                  <div class="float-right">
+                      <nav class="navbar">
+                          <form method="POST" class="form-inline">
+                              {{ form.hidden_tag() }}
+                              {{ form.critere(class="form-control") }}{{ form.submit(class="btn btn-primary") }}
+                          </form>
+                      </nav>
+                  </div>
+                  </div>
+                </div>
+            </header>
+
+            <h1 class="mb-sm-4 text-center">ACCUEIL</h1>
+
+            {% for mess in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            {{mess}}
+            </div>
+            {% endfor %}
+
+            <div class="row">
+                {% for mat in materiel %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <figure class="figure">
+                            <a href="#" data-toggle="modal" data-target="#modalScrollableBody{{mat.sn}}">
+                                {% if mat.type == 'VIDEOPROJECTEUR' %}
+                                <img src="{{ url_for('static', filename='image/projecteur.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% endif %}
+                            </a>
+
+                              <div class="modal fade" id="modalScrollableBody{{mat.sn}}" tabindex="-1" role="dialog" aria-labelledby="modalScrollableBodyTitle{{mat.sn}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                  <div class="modal-content">
+                                      <form method="POST" action="{{url_for('utilisateur.liste', reserv_id=mat.sn) }}">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="modalScrollableBodyTitle{{mat.sn}}">{{mat.type}}</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                              </button>
+                                          </div>
+                                          <div class="modal-body">
+                                              {{ form1.hidden_tag() }}
+                                              <div class="row">
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.filiere.label }} {{ form1.filiere(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.salle.label }} {{ form1.salle(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.matiere.label }} {{ form1.matiere(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.h_debut.label }} {{ form1.h_debut(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-12 col-sm-6">
+                                                      <div class="form-group">
+                                                        {{ form1.h_fin.label }} {{ form1.h_fin(class="form-control") }}
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              {{ form1.submit1(class="btn btn-primary") }}
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <figcaption class="figure-caption">
+                              <h5>{{mat.type}} <small>{{mat.model}}</small></h5>
+                                <p>Numero de serie : {{mat.sn}}</p>
+                                <p>moyens de connexion : {{mat.exigence}}</p>
+                            </figcaption>
+                          </figure>
+                        </div>
+                {% endfor %}
+            </div>
+
+                {% if user.poste == 'CHEF DE DEPARTEMENT' %}
+
+            <div class="row">
+                {% for sal in salle %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <figure class="figure">
+                            <a href="#" data-toggle="modal" data-target="#modalScrollableBody{{sal.id}}">
+                                {% if sal.type == 'AMPHITHEATRE' %}
+                                <img src="{{ url_for('static', filename='image/amphi.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% elif sal.type == 'LABORATOIRE DE CHIMIE' %}
+                                <img src="{{ url_for('static', filename='image/chimie.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% elif sal.type == 'LABORATOIRE D\'ELECTRONIQUE' %}
+                                <img src="{{ url_for('static', filename='image/electronique.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% elif sal.type == 'LABORATOIRE D\'ELECTROTECHNIQUE' %}
+                                <img src="{{ url_for('static', filename='image/electrotech.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% elif sal.type == 'LABORATOIRE DE SCIENCES INFIRMIER' %}
+                                <img src="{{ url_for('static', filename='image/sciInfirm.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% elif sal.type == 'SALLE D\'INFORMATIQUE' %}
+                                <img src="{{ url_for('static', filename='image/info.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% else %}
+                                <img src="{{ url_for('static', filename='image/screenshot.png') }}" class="figure-img img-fluid img-thumbnail" alt="Figure image">
+                                {% endif %}
+                            </a>
+
+                              <div class="modal fade" id="modalScrollableBody{{sal.id}}" tabindex="-1" role="dialog" aria-labelledby="modalScrollableBodyTitle{{sal.id}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                  <div class="modal-content">
+                                      <form method="POST" action="{{url_for('utilisateur.liste', reserv_id=sal.id)}}">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="modalScrollableBodyTitle{{sal.id}}">{{sal.type}}</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                              </button>
+                                          </div>
+                                          <div class="modal-body">
+                                              {{ form1.hidden_tag() }}
+                                              <div class="row">
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.filiere.label }} {{ form1.filiere(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.matiere.label }} {{ form1.matiere(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        {{ form1.h_debut.label }} {{ form1.h_debut(class="form-control") }}
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-12 col-sm-6">
+                                                      <div class="form-group">
+                                                        {{ form1.h_fin.label }} {{ form1.h_fin(class="form-control") }}
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              {{ form1.submit1(class="btn btn-primary") }}
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <figcaption class="figure-caption">
+                              <h5>{{sal.type}} <small>{{sal.numero}}</small></h5>
+                                <p> Nombre de place : {{sal.nbre_place}}</p>
+                            </figcaption>
+                          </figure>
+                        </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  </body>
+</html>
